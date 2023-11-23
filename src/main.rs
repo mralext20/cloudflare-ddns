@@ -24,14 +24,20 @@ fn main() {
         let ip_addr = match client.get("https://api.ipify.org/").send() {
             Ok(response) => match response.text() {
                 Ok(text) => text,
-                Err(_) => {
-                    println!("Error: Failed to get IP address");
+                Err(err) => {
+                    println!(
+                        "Error: Failed to get IP address: {}, trying again in {} seconds",
+                        err, SLEEP_FROM_NO_RESPONSE
+                    );
                     std::thread::sleep(std::time::Duration::from_secs(SLEEP_FROM_NO_RESPONSE));
                     continue;
                 }
             },
-            Err(_) => {
-                println!("Error: Failed to get IP address");
+            Err(err) => {
+                println!(
+                    "Error: Failed to get IP address: {}, trying again in {} seconds",
+                    err, SLEEP_FROM_NO_RESPONSE
+                );
                 std::thread::sleep(std::time::Duration::from_secs(SLEEP_FROM_NO_RESPONSE));
                 continue;
             }
