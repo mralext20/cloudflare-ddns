@@ -20,6 +20,8 @@ RUN cargo build --release
 # Use a smaller image for the runtime step
 FROM debian:stable-slim
 
+# install openssl
+RUN apt-get update && apt-get install -y openssl ca-certificates 
 # Copy the binary from the build step to the runtime container
 COPY --from=build /usr/src/app/target/release/cloudflared /usr/local/bin/cloudflared
 
