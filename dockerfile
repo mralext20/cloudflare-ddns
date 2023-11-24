@@ -23,7 +23,7 @@ FROM debian:stable-slim
 # install openssl
 RUN apt-get update && apt-get install -y openssl ca-certificates 
 # Copy the binary from the build step to the runtime container
-COPY --from=build /usr/src/app/target/release/cloudflared /usr/local/bin/cloudflared
+COPY --from=build /usr/src/app/target/release/cloudflare-ddns /usr/local/bin/cloudflare-ddns
 
 # Set the command to run when the container starts
-CMD ["cloudflared"]
+CMD ["cloudflare-ddns"]
